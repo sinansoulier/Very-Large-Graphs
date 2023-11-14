@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from src.bron_kerbosch import BronKerbosch
 
+
 @pytest.mark.parametrize(
     "bk",
     [
@@ -24,13 +25,13 @@ class TestBronKerbosch:
         """
         nx.draw(bk.G, with_labels=True)
         plt.savefig(f'tests/plots/{bk.graph_name}.png', dpi=300, bbox_inches='tight')
-    
+
     def test_bron_kerbosch(self, bk: BronKerbosch):
         """
         Test basic implementation of Bron-Kerbosch algorithm.
         """
         self.plot_graph(bk)
-        
+
         expected_cliques = [set(c) for c in nx.find_cliques(bk.G)]
 
         bk.bron_kerbosch(R=bk.R, P=bk.P, X=bk.X)
@@ -38,15 +39,15 @@ class TestBronKerbosch:
         assert len(bk.cliques) == len(expected_cliques)
         for clique in expected_cliques:
             assert clique in bk.cliques
-        
+
         bk.reset()
-    
+
     def test_bron_kerbosch_with_pivot(self, bk: BronKerbosch):
         """
         Test implementation of Bron-Kerbosch algorithm with pivot.
         """
         self.plot_graph(bk)
-        
+
         expected_cliques = [set(c) for c in nx.find_cliques(bk.G)]
 
         bk.bron_kerbosch_pivot(R=bk.R, P=bk.P, X=bk.X)
@@ -54,15 +55,15 @@ class TestBronKerbosch:
         assert len(bk.cliques) == len(expected_cliques)
         for clique in expected_cliques:
             assert clique in bk.cliques
-        
+
         bk.reset()
-    
+
     def test_bron_kerbosch_degeneracy(self, bk: BronKerbosch):
         """
         Test implementation of Bron-Kerbosch algorithm with degeneracy ordering.
         """
         self.plot_graph(bk)
-        
+
         expected_cliques = [set(c) for c in nx.find_cliques(bk.G)]
 
         bk.bron_kerbosch_degeneracy()
@@ -70,5 +71,5 @@ class TestBronKerbosch:
         assert len(bk.cliques) == len(expected_cliques)
         for clique in expected_cliques:
             assert clique in bk.cliques
-        
+
         bk.reset()

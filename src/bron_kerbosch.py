@@ -1,5 +1,6 @@
 import networkx as nx
 
+
 class BronKerbosch:
     """
     Bron-Kerbosch class containing algorithm for finding all maximal cliques in a graph.
@@ -18,7 +19,7 @@ class BronKerbosch:
         self.G = G
         self.graph_name = graph_name
         self.cliques = []
-        
+
         # Initialize R, P, X disjoint sets.
         self.R = set()
         self.P = set(G.nodes)
@@ -32,7 +33,7 @@ class BronKerbosch:
         self.R = set()
         self.P = set(self.G.nodes)
         self.X = set()
-    
+
     def bron_kerbosch(self, R: set, P: set, X: set):
         """
         Basic implementation of Bron-Kerbosch algorithm.
@@ -45,7 +46,7 @@ class BronKerbosch:
         if not P and not X:
             self.cliques.append(R.copy())
             return
-        
+
         for v in list(P):
             neighbors_v = set([n for n in self.G.neighbors(v)])
             self.bron_kerbosch(
@@ -68,7 +69,7 @@ class BronKerbosch:
         """
         # FIXME
         raise NotImplementedError
-    
+
     def bron_kerbosch_degeneracy(self):
         """
         Implementation of Bron-Kerbosch algorithm with degeneracy ordering.
