@@ -89,16 +89,17 @@ class BronKerbosch:
         Return a degeneracy ordering of the graph.
         """
         # Initialiser la liste de sortie L à la liste vide.
-        l = []
+        L = []
         # Calculer une valeur dv pour chaque sommet v de G,
         # qui est le nombre de voisins de v qui n'est pas déjà dans L
         # (initialement, il s'agit donc du degré des sommets dans G).
         d_v = [tp[1] for tp in self.G.degree]
-        # Initialiser un tableau D tel que D[i] contienne la liste des sommets v qui ne sont pas déjà dans L pour lesquels dv = i.
+        # Initialiser un tableau D tel que D[i] contienne la liste des sommets v
+        # qui ne sont pas déjà dans L pour lesquels dv = i.
         d = [[] for _ in range(max(d_v) + 1)]
         for v, degree in zip(self.G.nodes(), d_v):
             d[degree].append(v)
-        
+
         # Initialiser la valeur k à 0.
         k = 0
         for _ in range(self.G.number_of_nodes()):
@@ -110,18 +111,18 @@ class BronKerbosch:
             k = max(k, i)
             # Sélectionner un sommet v de D[i], ajouter v en tête de L et le retirer de D[i].
             v = d[i].pop(0)
-            l.insert(0, v)
+            L.insert(0, v)
             # Pour chaque voisin w de v qui n'est pas déjà dans L,
             # retirer une unité de dw et déplacer w de la cellule de D correspondant à la nouvelle valeur de dw.
             for w in self.G.neighbors(v):
-                if w in l:
+                if w in L:
                     continue
 
                 d[d_v[w]].remove(w)
                 d_v[w] -= 1
                 d[d_v[w]].append(w)
-        
-        return l
+
+        return L
 
     def bron_kerbosch_degeneracy(self):
         """
