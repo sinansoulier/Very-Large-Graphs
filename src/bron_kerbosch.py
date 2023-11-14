@@ -67,8 +67,22 @@ class BronKerbosch:
             P (set): set of vertices that are candidates to be added to R
             X (set): set of vertices that are not candidates to be added to R
         """
-        # FIXME
-        raise NotImplementedError
+        if not P and not X:
+            self.cliques.append(R.copy())
+            return
+
+        u = list(P.union(X))[0]
+        neighbors_u = set([n for n in self.G.neighbors(u)])
+        for v in list(P.difference(neighbors_u)):
+            neighbors_v = set([n for n in self.G.neighbors(v)])
+            self.bron_kerbosch_pivot(
+                R.union([v]),
+                P.intersection(neighbors_v),
+                X.intersection(neighbors_v),
+            )
+
+            P.remove(v)
+            X.add(v)
 
     def bron_kerbosch_degeneracy(self):
         """

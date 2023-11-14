@@ -42,7 +42,7 @@ class TestBronKerbosch:
 
         bk.reset()
 
-    def test_bron_kerbosch_with_pivot(self, bk: BronKerbosch):
+    def test_bron_kerbosch_pivot(self, bk: BronKerbosch):
         """
         Test implementation of Bron-Kerbosch algorithm with pivot.
         """
