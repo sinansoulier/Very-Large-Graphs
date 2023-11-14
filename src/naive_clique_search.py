@@ -42,4 +42,4 @@ class NaiveCliqueSearch:
             for nodes in itertools.combinations(self.G.nodes(), i):
                 if len(nodes) > max_clique_size and self.is_clique(nodes):
                     self.max_clique = set(nodes)
-                    max_clique_size = len(self.max_clique)                
+                    max_clique_size = len(self.max_clique)
