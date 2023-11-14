@@ -84,10 +84,57 @@ class BronKerbosch:
             P.remove(v)
             X.add(v)
 
+    def degeneracy_ordering(self):
+        """
+        Return a degeneracy ordering of the graph.
+        """
+        # Initialiser la liste de sortie L à la liste vide.
+        l = []
+        # Calculer une valeur dv pour chaque sommet v de G,
+        # qui est le nombre de voisins de v qui n'est pas déjà dans L
+        # (initialement, il s'agit donc du degré des sommets dans G).
+        d_v = [tp[1] for tp in self.G.degree]
+        # Initialiser un tableau D tel que D[i] contienne la liste des sommets v qui ne sont pas déjà dans L pour lesquels dv = i.
+        d = [[] for _ in range(max(d_v) + 1)]
+        for v, degree in zip(self.G.nodes(), d_v):
+            d[degree].append(v)
+        
+        # Initialiser la valeur k à 0.
+        k = 0
+        for _ in range(self.G.number_of_nodes()):
+            # Parcourir les cellules du tableau D[0], D[1], ... jusqu'à trouver un i pour lequel D[i] est non-vide.
+            i = 0
+            while not d[i]:
+                i += 1
+            # Mettre k à max(k,i).
+            k = max(k, i)
+            # Sélectionner un sommet v de D[i], ajouter v en tête de L et le retirer de D[i].
+            v = d[i].pop(0)
+            l.insert(0, v)
+            # Pour chaque voisin w de v qui n'est pas déjà dans L,
+            # retirer une unité de dw et déplacer w de la cellule de D correspondant à la nouvelle valeur de dw.
+            for w in self.G.neighbors(v):
+                if w in l:
+                    continue
+
+                d[d_v[w]].remove(w)
+                d_v[w] -= 1
+                d[d_v[w]].append(w)
+        
+        return l
+
     def bron_kerbosch_degeneracy(self):
         """
         Implementation of Bron-Kerbosch algorithm with degeneracy ordering.
         """
         self.reset()
-        # FIXME
-        raise NotImplementedError
+        # for v in degree_ordering_heuristic(self.G):
+        for v in self.degeneracy_ordering():
+            neighbors_v = set([n for n in self.G.neighbors(v)])
+            self.bron_kerbosch_pivot(
+                R=self.R.union([v]),
+                P=self.P.intersection(neighbors_v),
+                X=self.X.intersection(neighbors_v),
+            )
+            self.P.remove(v)
+            self.X.add(v)
