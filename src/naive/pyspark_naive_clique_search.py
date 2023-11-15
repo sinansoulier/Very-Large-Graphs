@@ -18,8 +18,8 @@ class PySparkNaiveCliqueSearch(NaiveCliqueSearch):
         """
         Reset cliques list.
         """
-        super().reset()
-        
+        self.max_clique = set()
+
     def naive_clique_search(self):
         """
         Naive implementation of clique search.
@@ -34,6 +34,6 @@ class PySparkNaiveCliqueSearch(NaiveCliqueSearch):
             .filter(lambda nodes: self.is_clique(nodes)) \
             .map(lambda nodes: (len(nodes), set(nodes))) \
             .reduce(lambda x, y: x if x[0] > y[0] else y)
-        
+
         self.max_clique = clique[1]
         spark.stop()

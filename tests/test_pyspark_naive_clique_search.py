@@ -4,6 +4,7 @@ import networkx as nx
 
 from src.naive.pyspark_naive_clique_search import PySparkNaiveCliqueSearch
 
+
 @pytest.mark.parametrize(
     "ncs",
     [
