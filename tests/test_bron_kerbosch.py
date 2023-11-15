@@ -2,7 +2,7 @@ import pytest
 import networkx as nx
 import matplotlib.pyplot as plt
 
-from src.bron_kerbosch import BronKerbosch
+from src.bron_kerbosch.bron_kerbosch import BronKerbosch
 
 
 @pytest.mark.parametrize(

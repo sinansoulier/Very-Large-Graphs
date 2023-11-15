@@ -2,7 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pytest
 
-from src.naive_clique_search import NaiveCliqueSearch
+from src.naive.naive_clique_search import NaiveCliqueSearch
 
 
 @pytest.mark.parametrize(
@@ -10,9 +10,9 @@ from src.naive_clique_search import NaiveCliqueSearch
     [
         NaiveCliqueSearch(G=nx.erdos_renyi_graph(20, 0.1), graph_name='G_20_0.1'),
         NaiveCliqueSearch(G=nx.erdos_renyi_graph(20, 0.3), graph_name='G_20_0.3'),
-        NaiveCliqueSearch(G=nx.erdos_renyi_graph(15, 0.5), graph_name='G_15_0.5'),
-        NaiveCliqueSearch(G=nx.erdos_renyi_graph(10, 0.7), graph_name='G_10_0.7'),
-        NaiveCliqueSearch(G=nx.erdos_renyi_graph(10, 0.9), graph_name='G_10_0.9'),
+        NaiveCliqueSearch(G=nx.erdos_renyi_graph(20, 0.5), graph_name='G_20_0.5'),
+        NaiveCliqueSearch(G=nx.erdos_renyi_graph(20, 0.7), graph_name='G_20_0.7'),
+        NaiveCliqueSearch(G=nx.erdos_renyi_graph(20, 0.9), graph_name='G_20_0.9'),
     ]
 )
 class TestNaiveCliqueSearch:
