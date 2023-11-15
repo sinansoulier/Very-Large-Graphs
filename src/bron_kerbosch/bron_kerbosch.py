@@ -7,7 +7,7 @@ class BronKerbosch:
     The different implementations of the algorithm are:
     - bron_kerbosch: basic implementation
     - bron_kerbosch_with_pivot: implementation with pivot
-
+    - bron_kerbosch_degeneracy: implementation with degeneracy ordering
     """
     def __init__(self, G: nx.graph, graph_name: str = 'G'):
         """
@@ -68,8 +68,8 @@ class BronKerbosch:
             X (set): set of vertices that are not candidates to be added to R
         """
         if not P and not X:
-            self.cliques.append(R.copy())
-            return
+            self.cliques.append(frozenset(R))
+            return self.cliques
 
         u = list(P.union(X))[0]
         neighbors_u = set([n for n in self.G.neighbors(u)])
@@ -83,6 +83,8 @@ class BronKerbosch:
 
             P.remove(v)
             X.add(v)
+
+        return self.cliques
 
     def degeneracy_ordering(self):
         """
@@ -129,7 +131,6 @@ class BronKerbosch:
         Implementation of Bron-Kerbosch algorithm with degeneracy ordering.
         """
         self.reset()
-        # for v in degree_ordering_heuristic(self.G):
         for v in self.degeneracy_ordering():
             neighbors_v = set([n for n in self.G.neighbors(v)])
             self.bron_kerbosch_pivot(
