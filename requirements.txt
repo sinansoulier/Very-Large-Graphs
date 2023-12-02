@@ -1,5 +1,0 @@
-matplotlib
-networkx
-pytest
-flake8
-pyspark
