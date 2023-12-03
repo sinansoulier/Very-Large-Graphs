@@ -13,5 +13,5 @@ echo "Created $PLOT_DIR directory\n"
 for t in $(ls tests/test*.py)
 do
     echo "Running $t ..."
-    python -m pytest "$t"
+    python3 -m pytest "$t"
 done
